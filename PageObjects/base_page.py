@@ -24,7 +24,7 @@ class BasePage:
         element = self.find_element(locator)
         element.click()
 
-    def enter_test(self, locator, text):
+    def enter_text(self, locator, text):
         element = self.find_element(locator)
         element.clear()
         element.send_keys(text)
@@ -38,6 +38,6 @@ class BasePage:
 
     def fetch_url(self):
         try:
-            return self.driver.url
+            return self.driver.current_url
         except (NoSuchElementException, ElementNotVisibleException) as error:
             print("ERROR", error)
