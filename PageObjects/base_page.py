@@ -3,7 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException
 
-from Configuration.confTest import driver_setup
+from Configuration.conftest import driver_setup
 
 
 class BasePage:
@@ -41,3 +41,17 @@ class BasePage:
             return self.driver.current_url
         except (NoSuchElementException, ElementNotVisibleException) as error:
             print("ERROR", error)
+
+    def is_visible(self, locator):
+        try:
+            web_element = WebDriverWait(self.driver, self.timeout).until(EC.visibility_of_element_located(locator))
+            return web_element.is_displayed()
+        except (NoSuchElementException, ElementNotVisibleException) as error:
+            print("ERROR: ", error)
+
+    def is_enable(self, locator):
+        try:
+            web_element = WebDriverWait(self.driver, self.timeout).until(EC.element_to_be_clickable(locator))
+            return web_element.is_enabled()
+        except (NoSuchElementException, ElementNotVisibleException) as error:
+            print("ERROR: ", error)

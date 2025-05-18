@@ -4,7 +4,7 @@ from PageObjects.home_page import HomePage
 from PageObjects.base_page import BasePage
 from PageObjects.login_page import Login_Page
 from TestDate.data import Data
-from Configuration.confTest import driver_setup
+from Configuration.conftest import driver_setup
 
 # @pytest.fixture
 # def page_objects(driver_setup):
@@ -28,6 +28,43 @@ def test_url(driver_setup):
     # print(base_page.fetch_url())
     assert base_page.fetch_url() == Data.home_page_url
     print("SUCCESS: HomePage URL is valid")
+
+def test_check_emai_password_inout_box_visible(driver_setup):
+    driver_setup.get(Data.url)
+    base_page = BasePage(driver_setup)
+    assert base_page.fetch_url() == Data.url
+
+    home_page = HomePage(driver_setup)
+    home_page.click_homepage_login()
+
+    login_page = Login_Page(driver_setup)
+    try:
+        base_page.is_visible(login_page.EMAIL_ADDRESS)
+        print("\nSUCCESS: Email Address is visible")
+    except Exception as e:
+        print(f"FAILED: Email Address is not visible {e}")
+    try:
+        base_page.is_visible(login_page.PASSWORD)
+        print("SUCCESS: Password is visible")
+    except Exception as e:
+        print(f"FAILED: Password is not visible {e}")
+
+def test_check_Login_button_is_enable(driver_setup):
+    driver_setup.get(Data.url)
+    base_page = BasePage(driver_setup)
+    assert base_page.fetch_url() == Data.url
+
+    home_page = HomePage(driver_setup)
+    home_page.click_homepage_login()
+
+    login_page = Login_Page(driver_setup)
+    try:
+        base_page.is_enable(login_page.LOGINPAGE_LOGIN_BUTTON)
+        print("\nSUCCESS: Login Button is Enabled")
+    except Exception as e:
+        print(f"FAILED: Login Button is not Enabled {e}")
+
+
 
 def test_valid_emai_password(driver_setup):
     driver_setup.get(Data.url)

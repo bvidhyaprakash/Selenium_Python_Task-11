@@ -8,7 +8,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 @pytest.fixture()
 def driver_setup():
     # initialize the driver setup
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    chrome_option = webdriver.ChromeOptions()
+    chrome_option.add_argument('--headless')
+
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_option)
     driver.maximize_window()
     yield driver
     # teardown method
